@@ -6,7 +6,7 @@ then
     then
         range=$(( 1+($1-1)%26 ))
     else
-        letter=$(echo $1 | head -c 1)
+        letter=$(echo $1|head -c 1|tr '[:upper:]' '[:lower:]')
         range=$(printf "%d" "'$letter")
         range=$(( 1+($range-97)%26 ))
     fi
