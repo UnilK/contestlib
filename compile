@@ -1,0 +1,3 @@
+#!/bin/bash
+mkdir -p bin
+g++ -std=c++17 -Wall -Og -g tasks/$1.cpp -o bin/$1

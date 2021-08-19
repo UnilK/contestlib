@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [[ $# -gt 0 ]]
+then
+    if [[ $1 =~ [0-9] ]]
+    then
+        range=$(( 1+($1-1)%26 ))
+    else
+        letter=$(echo $1 | head -c 1)
+        range=$(printf "%d" "'$letter")
+        range=$(( 1+($range-97)%26 ))
+    fi
+else
+    range=6
+fi
+
+
+mkdir -p tasks
+rm -f tasks/*
+
+alphabet=( {A..Z} )
+for ((i=0; i<range; i++)) 
+do
+    cp template.cpp ./tasks/${alphabet[i]}.cpp
+done
+
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+stay="bash -c \"read var\""
+gnome-terminal -- bash -c "bin/$1; $stay;"
