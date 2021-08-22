@@ -1,0 +1,32 @@
+"indentaton setup
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+filetype indent on
+
+"still use the mouse sometimes
+set mouse=a
+
+"colors :)
+syntax on
+
+"highlight search results
+set hlsearch
+
+"use global clipboard
+set clipboard=unnamedplus
+
+"sometimes I accidentally press the arrow keys when still holding shift
+"- page up and page down buttons exist too, so delete these bindings.
+noremap <s-up> <Nop>
+noremap <s-down> <Nop>
+
+"don't autoindent namespaces in C++
+set cino=N-s
+
+"contestlib shortcuts 
+map mk :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\.cpp/-d \1 \2/"<Bar>xargs ./compile<CR><C-l>
+map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\.cpp/\1/"<Bar>xargs ./run<CR><C-l>
+map mj :silent !echo %<Bar>sed -r "s/.+\/(.+)\.cpp/\1/"<Bar>xargs ./debug<CR><C-l>

@@ -19,4 +19,5 @@ do
 done
 
 mkdir -p bin
-g++ -std=c++17 -Wall -Og -g $directory/$task.cpp -o bin/$task
+stay="echo done; bash -c \"read var\""
+gnome-terminal -- bash -c "g++ -std=c++17 -Wall -Og -g $directory/$task.cpp -o bin/$task; $stay;"
