@@ -1,2 +1,0 @@
-#!/bin/bash
-gnome-terminal -- bash -c "touch tasks/$1.txt; vim tasks/$1.txt;"

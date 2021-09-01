@@ -1,3 +1,0 @@
-#!/bin/bash
-stay="echo done; bash -c \"read var\""
-gnome-terminal -- bash -c "cat tasks/$1.txt | bin/$1; $stay;"

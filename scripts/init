@@ -16,12 +16,15 @@ fi
 
 
 mkdir -p tasks
+mkdir -p tests
 rm -f tasks/*
+rm -f tests/*
 
 alphabet=( {A..Z} )
 for ((i=0; i<range; i++)) 
 do
-    cp template.cpp ./tasks/${alphabet[i]}.cpp
+    cp lib/template.cpp tasks/${alphabet[i]}.cpp
 done
 
+vim -S .vimrc -p tasks/*
 
