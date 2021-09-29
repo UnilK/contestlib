@@ -1,18 +1,29 @@
 #!/bin/bash
 
-if [[ $# -gt 0 ]]
-then
-    if [[ $1 =~ [0-9] ]]
-    then
-        range=$(( 1+($1-1)%26 ))
-    else
-        letter=$(echo $1|head -c 1|tr '[:upper:]' '[:lower:]')
-        range=$(printf "%d" "'$letter")
-        range=$(( 1+($range-97)%26 ))
-    fi
-else
-    range=6
-fi
+range=6
+python=0
+
+while [[ $# -gt 0 ]]
+do    
+    option="$1"
+    case $option in
+        -py)
+            python=1
+            shift 1
+            ;;
+        *)
+            if [[ $1 =~ [0-9] ]]
+            then
+                range=$(( 1+($1-1)%26 ))
+            else
+                letter=$(echo $1|head -c 1|tr '[:upper:]' '[:lower:]')
+                range=$(printf "%d" "'$letter")
+                range=$(( 1+($range-97)%26 ))
+            fi
+            shift 1
+            ;;
+    esac
+done
 
 
 mkdir -p tasks
@@ -25,6 +36,14 @@ for ((i=0; i<range; i++))
 do
     cp lib/template.cpp tasks/${alphabet[i]}.cpp
 done
+
+if [ $python -eq 1 ];
+then
+    for ((i=0; i<range; i++)) 
+    do
+        touch tasks/${alphabet[i]}.py
+    done
+fi
 
 vim -S .vimrc -p tasks/*
 
