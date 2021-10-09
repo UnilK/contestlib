@@ -9,15 +9,10 @@
 #define IOS cin.tie(0)->sync_with_stdio(0)
 
 using namespace std;
-void solve();
 
 int main(){
 
 
 
     return 0;
-}
-
-void solve(){
-
 }

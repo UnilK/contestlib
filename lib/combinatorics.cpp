@@ -2,6 +2,7 @@
 template<typename T> struct fpow{
     T MOD;
     fpow(T MOD_) : MOD(MOD_) {}
+    fpow(){}
     T operator()(T a, T b){
         T ret = 1;
         for(;b;b>>=1){
@@ -18,6 +19,7 @@ template<typename T> struct fact{
         f[0] = 1;
         for(int i=1; i<=n; i++) f[i] = (long long)i*f[i-1]%MOD;
     }
+    fact(){}
     T operator()(int n){ return f[n]; }
 };
 template<typename T> struct fnCr{
@@ -31,6 +33,7 @@ template<typename T> struct fnCr{
             }
         }
     }
+    fnCr(){}
     T operator()(int n, int r){ return C[n][r]; }
 };
 template<typename T> struct bnCr{
@@ -46,6 +49,7 @@ template<typename T> struct bnCr{
             inv[i] = pwr(f[i], MOD-2); // assumes MOD is prime
         }
     }
+    bnCr(){}
     T operator()(int n, int r){ return (long long)f[n]*inv[r]%MOD*inv[n-r]%MOD; }
 };
 

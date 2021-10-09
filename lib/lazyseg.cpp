@@ -8,12 +8,12 @@ template<typename T, typename L> struct lazyseg{
     int ql, qr;
     L val;
     
-    T iadd(int l, int r, int k){
+    T ioper(int l, int r, int k){
         push(k, l, r);
         if(qr < l || ql > r) return seg[k];
         if(ql <= l && qr >= r) return drop(k, l, r);
         int m = (l+r)/2;
-        seg[k] = join(iadd(l, m, 2*k), iadd(m+1, r, 2*k+1));
+        seg[k] = join(ioper(l, m, 2*k), ioper(m+1, r, 2*k+1));
         return seg[k];
     }
 
@@ -42,6 +42,8 @@ template<typename T, typename L> struct lazyseg{
         for(int i=0; i<n; i++) seg[N+i+offset] = v[i];
         for(int i=N-1; i; i--) seg[i] = join(seg[2*i], seg[2*i+1]);
     }
+
+    lazyseg(){}
     
     // push down logic.
     void push(int k, int l, int r){
@@ -65,8 +67,8 @@ template<typename T, typename L> struct lazyseg{
     }
     
     // default query return value and default lazy value.
-    const T nil = 0;
-    const L lazynil = 0;
+    T nil = 0;
+    L lazynil = 0;
   
     // qer query join.
     T join(T a, T b){
@@ -89,10 +91,10 @@ template<typename T, typename L> struct lazyseg{
         return iqer(0, N-1, 1);
     }
     
-    void add(int l, int r, T o){
+    void oper(int l, int r, T o){
         ql = l; qr = r;
         val = o;
-        iadd(0, N-1, 1);
+        ioper(0, N-1, 1);
     }
 };
 

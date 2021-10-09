@@ -16,8 +16,10 @@ template<typename T> struct segtree{
         for(int i=N-1; i; i--) seg[i] = join(seg[2*i], seg[2*i+1]);
     }
 
+    segtree(){}
+
     // default value
-    const T nil = 0;
+    T nil = 0;
     
     // join subtrees and query
     T join(T a, T b){
@@ -36,7 +38,7 @@ template<typename T> struct segtree{
         return s;
     }
     
-    void add(int i, T o){
+    void oper(int i, T o){
         i += N;
         seg[i] += o;
         for(i /= 2; i; i /= 2) seg[i] = join(seg[2*i], seg[2*i+1]);
