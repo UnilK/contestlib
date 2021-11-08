@@ -1,6 +1,9 @@
 "compile
 map mk :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 \2/"<Bar>xargs ./scripts/compile<CR><C-l>
 
+"compile for debugging
+map mo :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 -o \2/"<Bar>xargs ./scripts/compile<CR><C-l>
+
 "run
 map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./scripts/run<CR><C-l>
 

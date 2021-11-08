@@ -1,2 +1,4 @@
-vim -S .vimrc -p tasks/*
+#!/bin/bash
+
+vim -S scripts/.vimrc -p tasks/*
 

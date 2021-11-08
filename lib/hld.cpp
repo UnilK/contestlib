@@ -1,17 +1,20 @@
-template<typename T> struct HLD{
+template<
+typename T, typename L,
+template<typename, typename> typename O,
+template<typename, typename, template<typename, typename> typename> typename S>
+struct HLD{
     
     // adamant's awesome HLD implementation <3
     // https://codeforces.com/blog/entry/53170
     // nodes are 1-indexed
 
-    int n;
-    vector<T> &v;
-    vector<int> l, r, nxt, hop;
-    segtree<T> seg;
+    using X = O<T, L>;
+    int n, isedge;
+    vector<int> l, nxt, hop;
+    S<T, L, O> seg;
 
-    HLD(vector<vector<int> > &g, vector<T> &v_):
-        n(g.size()-1), v(v_), l(vector<int>(g.size())), r(vector<int>(g.size())),
-        nxt(vector<int>(g.size())), hop(vector<int>(g.size())){
+    HLD(vector<vector<int> > &g, vector<T> v={}, int isedge_=0):
+        n(g.size()-1), isedge(isedge_), l(g.size()), nxt(g.size()), hop(g.size()){
 
         vector<int> sz(n+1, 0);
 
@@ -45,20 +48,15 @@ template<typename T> struct HLD{
                     dfs1(dfs1, j);
                 }
             }
-            r[i] = t;
         };
 
         nxt[1] = hop[1] = 1;
         dfs1(dfs1, 1);
 
-        // query initialization
-
-        vector<T> ord_val(n);
-        for(int i=1; i<=n; i++) ord_val[l[i]] = v[i];
-        seg = segtree<T>(ord_val);
+        vector<T> ord(n+1);
+        for(int i=1; i<=n; i++) ord[l[i]] = v[i];
+        seg.init(n, ord);
     }
-
-    T nil = 0;
 
     int lca(int a, int b){
         while(nxt[a] != nxt[b]){
@@ -69,25 +67,25 @@ template<typename T> struct HLD{
         return b;
     }
 
-    void oper(int i, T o){
-        v[i] = o;
-        seg.oper(l[i], o);
-    }
-
-    T qer(int a, int b){
-        T ret = nil;
+    void add(int a, int b, L val){
         while(nxt[a] != nxt[b]){
             if(l[nxt[a]] < l[nxt[b]]) swap(a, b);
-            ret = join(ret, seg.qer(l[nxt[a]], l[a]));
+            seg.add(l[nxt[a]], l[a], val);
             a = hop[a];
         }
         if(l[a] < l[b]) swap(a, b);
-        ret = join(ret, seg.qer(max(l[b], l[nxt[a]]), l[a]));
-        return ret;
+        seg.add(max(l[b]+isedge, l[nxt[a]]), l[a], val);
     }
 
-    T join(T a, T b){
-        return a+b;
+    T sum(int a, int b){
+        T ret = X::qnil;
+        while(nxt[a] != nxt[b]){
+            if(l[nxt[a]] < l[nxt[b]]) swap(a, b);
+            ret = X::join(ret, seg.sum(l[nxt[a]], l[a]));
+            a = hop[a];
+        }
+        if(l[a] < l[b]) swap(a, b);
+        return X::join(ret, seg.sum(max(l[b]+isedge, l[nxt[a]]), l[a]));
     }
 };
 
