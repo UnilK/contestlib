@@ -8,10 +8,8 @@ template<int MOD> struct Mint{
         int v0 = MOD, v1 = i, r0 = 0, r1 = 1;
         while(v1){
             int d = v0/v1;
-            r0 -= d*r1;
-            v0 -= d*v1;
-            swap(v0, v1);
-            swap(r0, r1);
+            r0 -= d*r1; v0 -= d*v1;
+            swap(v0, v1); swap(r0, r1);
         }
         return r0 < 0 ? r0+MOD : r0; 
     }
@@ -38,10 +36,10 @@ template<int MOD> struct Mint{
     explicit operator int() const { return i; }
     explicit operator size_t() const { return i; }
     explicit operator long long() const { return i; }
-    friend Mint operator+(const Mint &a, const Mint &b){ return Mint(a) += b; }
-    friend Mint operator-(const Mint &a, const Mint &b){ return Mint(a) -= b; }
-    friend Mint operator*(const Mint &a, const Mint &b){ return Mint(a) *= b; }
-    friend Mint operator/(const Mint &a, const Mint &b){ return Mint(a) /= b; }
+    friend Mint operator+(Mint a, const Mint &b){ return a += b; }
+    friend Mint operator-(Mint a, const Mint &b){ return a -= b; }
+    friend Mint operator*(Mint a, const Mint &b){ return a *= b; }
+    friend Mint operator/(Mint a, const Mint &b){ return a /= b; }
     friend bool operator==(const Mint &a, const Mint &b){ return a.i == b.i; }
     friend bool operator!=(const Mint &a, const Mint &b){ return a.i != b.i; }
     friend ostream &operator<<(ostream &s, const Mint &j){ return s << j.i; }

@@ -3,8 +3,7 @@ template<typename T> struct Matrix{
     vector<vector<T> > mx;
 
     Matrix(int n, int m) : mx(vector<vector<T>>(n, vector<T>(m, 0))) {}
-    Matrix(vector<vector<T> > &mx_) : mx(mx_) {}
-    Matrix(vector<vector<T> > &&mx_) : mx(mx_) {}
+    Matrix(vector<vector<T> > mx_) : mx(mx_) {}
     Matrix(){}
 
     static Matrix<T> unit(int n){
@@ -16,8 +15,8 @@ template<typename T> struct Matrix{
     int w() const { return mx.size(); }
     int h() const { if(w()){ return mx[0].size(); } return 0; }
 
-    vector<long double>& operator[](int i){ return mx[i]; }
-    long double operator()(int i, int j) const { return mx[i][j]; }
+    vector<T>& operator[](int i){ return mx[i]; }
+    T operator()(int i, int j) const { return mx[i][j]; }
 
     Matrix<T> &operator*=(const Matrix<T> &rhs){
         if(h() == rhs.w()){

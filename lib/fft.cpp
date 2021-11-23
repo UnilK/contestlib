@@ -6,24 +6,20 @@ struct FFT{
     vector<vector<complex<long double> > > w;
     vector<int> invbit;
 
-    FFT(int B_ = 0){
-        enlarge(B_);
-    }
+    FFT(int B_) : B(B_), w(B_), invbit(1<<B_, 0) {
+        
+        w[B-1].resize(1<<(B-1));
+        for(int i=0; i<(1<<(B-1)); i++) w[B-1][i] = polar(1.0L, pi*i/(1<<(B-1)));
+        if(B>1) invbit[1] = 1;
 
-    void enlarge(int B_){
-        B = max(B, B_);
-        while((int)w.size() <= B){
-            int z = 1<<w.size(), b = w.size();
-            w.resize(w.size()+1);
-            w[b].resize(z);
-
-            for(int i=0; i<z; i++) w[b][i] = polar(1.0L, pi*i/z);
-            
-            invbit.resize(z, 0);
-            for(int i=0; i<z/2; i++){
+        for(int b=B-2; b>=0; b--){
+            int n = 1<<b, nn = 1<<(B-b-1);
+            w[b].resize(n);
+            for(int i=0; i<nn; i++){
                 invbit[i] <<= 1;
-                invbit[i+z/2] = invbit[i]|1;
+                invbit[i+nn] = invbit[i]|1;
             }
+            for(int i=0; i<n; i++) w[b][i] = w[b+1][2*i];
         }
     }
 
@@ -34,8 +30,6 @@ struct FFT{
         while(1<<b < n) b++;
         n = 1<<b;
         v.resize(n, {0, 0});
-
-        enlarge(b);
 
         int shift = B-b;
         for(int i=0; i<n; i++){
@@ -83,4 +77,3 @@ struct FFT{
         return ct;
     }
 };
-

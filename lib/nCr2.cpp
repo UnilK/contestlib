@@ -12,11 +12,10 @@ template<int MOD> struct nCr{
     }
 
     nCr(int n) : f(n+1, 1), inv(n+1){
-        f[0] = inv[0] = 1;
-        for(int i=1; i<=n; i++){
-            f[i] = (long long)i*f[i-1]%MOD;
-            inv[i] = exeu(f[i]);
-        }
+        f[0] = 1;
+        for(int i=1; i<=n; i++) f[i] = (long long)i*f[i-1]%MOD;
+        inv[n] = exeu(f[n]);
+        for(int i=n-1; i>=0; i--) inv[i] = (long long)inv[i+1]*(i+1)%MOD;
     }
     int operator()(int n, int r){ return (long long)f[n]*inv[r]%MOD*inv[n-r]%MOD; }
 };
