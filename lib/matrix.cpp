@@ -44,7 +44,7 @@ template<typename T> struct Matrix{
     }
 
     T tolerance = 1e-10;
-    Matrix<T> inv(Matrix<T> rhs){
+    Matrix<T> inv(){
 
         assert(c() == r());
 
