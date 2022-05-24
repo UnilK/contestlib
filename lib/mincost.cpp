@@ -21,9 +21,10 @@ struct mincost {
     vector<array<ll, 2> > flowcost(ll target){
 
         vector<vector<array<int, 2> > > g = G;
-        priority_queue<pair<ll, int> > q;
+        queue<int> q;
         vector<ll> cap = CAP, cost = COST, d(n+1), f(n+1);
         vector<int> p(n+1);
+        vector<bool> vis(n+1);
 
         vector<array<ll, 2> > ans;
 
@@ -32,26 +33,27 @@ struct mincost {
         while(fsum < target){
             
             fill(d.begin(), d.end(), inf);
-            fill(p.begin(), p.end(), -1);
+            fill(vis.begin(), vis.end(), 0);
 
-            q.push({0, src});
+            q.push(src);
+            d[src] = 0;
 
             while(!q.empty()){
                 
-                auto [dd, i] = q.top(); dd = -dd;
+                int i = q.front();
                 q.pop();
 
-                if(dd > d[i]) continue;
-                d[i] = dd;
-
-                if(i == sink) break;
-
+                vis[i] = 0;
+                
                 for(auto [j, e] : g[i]){
-                    if(cap[e] > 0 && dd + cost[e] < d[j]){
-                        d[j] = dd + cost[e];
+                    if(cap[e] > 0 && d[i] + cost[e] < d[j]){
+                        d[j] = d[i] + cost[e];
                         p[j] = i;
                         f[j] = e;
-                        q.push({-d[j], j});
+                        if(!vis[j]){
+                            vis[j] = 1;
+                            q.push(j);
+                        }
                     }
                 }
             }
@@ -84,4 +86,3 @@ struct mincost {
         return ans;
     }
 };
-
