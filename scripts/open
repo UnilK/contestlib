@@ -1,4 +1,0 @@
-#!/bin/bash
-
-vim -S scripts/.vimrc -p tasks/*
-

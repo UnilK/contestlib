@@ -1,25 +1,26 @@
-template <typename T> struct dinic{
+struct dinic {
     
-    int src, sink, n, m = 0;
-    T inf = 1e18, flow = 0;
+    int src, sink, m = 0;
+    ll inf = 1e18, flow = 0;
     vector<vector<array<int, 2> > > g;
-    vector<T> cap;
+    vector<ll> cap;
     vector<int> lvl, ptr;
     queue<int> q;
 
-    dinic(vector<vector<pair<int, T> > > &g_, int src_, int sink_, bool directed=1)
-        : src(src_), sink(sink_), n(g_.size()), g(g_.size()), lvl(g_.size()), ptr(g_.size()) {
-        for(int i=0; i<n; i++){
-            for(auto j : g_[i]){
-                cap.push_back(j.second);
-                cap.push_back(directed ? 0 : j.second);
-                g[i].push_back({j.first, m++});
-                g[j.first].push_back({i, m++});
-            }
+    dinic(int n, const vector<tuple<int, int, ll> > &e, int src_, int sink_)
+        : src(src_), sink(sink_), g(n+1), lvl(n+1), ptr(n+1)
+    {
+       
+        for(auto [i, j, w] : e){
+            cap.push_back(w);
+            cap.push_back(0);
+            g[i].push_back({j, m++});
+            g[j].push_back({i, m++});
         }
+
         while(bfs()){
             fill(ptr.begin(), ptr.end(), 0);
-            while(T f = dfs(src, inf)) flow += f;
+            while(ll f = dfs(src, inf)) flow += f;
         }
     }
 
@@ -39,12 +40,12 @@ template <typename T> struct dinic{
         return lvl[sink];
     }
 
-    T dfs(int i, T f){
+    ll dfs(int i, ll f){
         if(i == sink) return f;
         for(int &j=ptr[i]; j<(int)g[i].size(); j++){
             auto &x = g[i][j];
             if(lvl[x[0]] != lvl[i]+1 || cap[x[1]] <= 0) continue;
-            T ff = dfs(x[0], min(f, cap[x[1]]));
+            ll ff = dfs(x[0], min(f, cap[x[1]]));
             if(ff > 0){
                 cap[x[1]] -= ff;
                 cap[x[1]^1] += ff;
@@ -55,6 +56,5 @@ template <typename T> struct dinic{
     }
 
     vector<array<int, 2> > &operator[](int i){ return g[i]; }
-    T &operator()(int i){ return cap[i]; }
+    ll &operator()(int i){ return cap[i]; }
 };
-

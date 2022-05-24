@@ -45,5 +45,5 @@ then
     done
 fi
 
-vim -S scripts/.vimrc -p tasks/*
+vim -S dev/.vimrc -p tasks/*
 

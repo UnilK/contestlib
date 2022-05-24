@@ -2,7 +2,7 @@
 
 task="A"
 directory="tasks"
-flags="-Wextra -O2"
+flags="-Wall -Wextra -O2"
 
 while [[ $# -gt 0 ]]
 do
@@ -13,7 +13,7 @@ do
             shift 2
             ;;
         -o)
-            flags="-Og -g"
+            flags="-Wall -Og -g"
             shift 1
             ;;
         *)
@@ -25,4 +25,4 @@ done
 
 mkdir -p bin
 stay="echo done; bash -c \"read var\""
-gnome-terminal -- bash -c "g++ -std=c++17 -Wall $flags $directory/$task.cpp -o bin/$task; $stay;"
+gnome-terminal -- bash -c "g++ -std=c++17 $flags $directory/$task.cpp -o bin/$task; $stay;"
