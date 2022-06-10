@@ -22,9 +22,9 @@ stay="bash -c \"read var\""
 
 case $language in
     py)
-        gnome-terminal -- bash -c "time python3 tasks/$task.py < tests/$task.txt; $stay;"
+        gnome-terminal -- bash -c "cat tests/$task.txt && time python3 tasks/$task.py < tests/$task.txt; $stay;"
         ;;
     cpp)
-        gnome-terminal -- bash -c "time bin/$task < tests/$task.txt; $stay;"
+        gnome-terminal -- bash -c "cat tests/$task.txt && time bin/$task < tests/$task.txt; $stay;"
         ;;
 esac

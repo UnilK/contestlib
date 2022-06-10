@@ -15,8 +15,6 @@ template<int MOD> struct rhash{
         int hsh = (h[r+1]-(long long)h[l]*p[r-l+1])%MOD;
         return hsh < 0 ? hsh+MOD : hsh;
     }
-
-    static int rnd(){ return 1e8+rand()%(int)1e9; }
 };
 
 using rh = rhash<998244353>;
