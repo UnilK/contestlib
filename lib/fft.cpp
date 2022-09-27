@@ -2,7 +2,7 @@ struct FFT{
 
     int B = 0;
 
-    long double pi = 3.141592653589793238462643383279502884L;
+    const long double pi = 4*atan(1.0l);
     vector<vector<complex<long double> > > w;
     vector<int> invbit;
 

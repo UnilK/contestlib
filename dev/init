@@ -1,6 +1,7 @@
 #!/bin/bash
 
 range=6
+cpp=1
 python=0
 
 while [[ $# -gt 0 ]]
@@ -9,6 +10,11 @@ do
     case $option in
         -py)
             python=1
+            shift 1
+            ;;
+        -pyy)
+            python=1
+            cpp=0
             shift 1
             ;;
         *)
@@ -25,17 +31,20 @@ do
     esac
 done
 
-
 mkdir -p tasks
 mkdir -p tests
 rm -f tasks/*
 rm -f tests/*
 
 alphabet=( {A..Z} )
-for ((i=0; i<range; i++)) 
-do
-    cp lib/template.cpp tasks/${alphabet[i]}.cpp
-done
+
+if [ $cpp -eq 1 ];
+then
+    for ((i=0; i<range; i++)) 
+    do
+        cp lib/template.cpp tasks/${alphabet[i]}.cpp
+    done
+fi
 
 if [ $python -eq 1 ];
 then

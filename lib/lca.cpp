@@ -35,7 +35,7 @@ struct LCA {
         l = pos[l]; r = pos[r];
         if(l>r) swap(l, r);
         
-        array<int, 2> low = {N, 0};
+        array<int, 2> low = {2*N+1, 0};
         while(l<=r){
             if(l&1) low = min(low, seg[l++]);
             if(~r&1) low = min(low, seg[r--]);
