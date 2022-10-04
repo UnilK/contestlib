@@ -1,0 +1,11 @@
+#!/bin/bash
+
+task=$1
+range=$2
+
+for ((i=0; i<range; i++)) 
+do
+    touch tests/${task}${i}.txt
+done
+
+gnome-terminal -- bash -c "vim -p tests/$task*.txt;"

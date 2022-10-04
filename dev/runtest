@@ -20,11 +20,19 @@ done
 
 stay="bash -c \"read var\""
 
-case $language in
-    py)
-        gnome-terminal -- bash -c "cat tests/$task.txt && time python3 tasks/$task.py < tests/$task.txt; $stay;"
-        ;;
-    cpp)
-        gnome-terminal -- bash -c "cat tests/$task.txt && time bin/$task < tests/$task.txt; $stay;"
-        ;;
-esac
+cases=()
+while IFS=  read -r -d $'\0'; do
+    cases+=("$REPLY")
+done < <(find ./tests -name "*${task}*" -print0)
+
+for tk in "${cases[@]}"
+do
+    case $language in
+        py)
+            gnome-terminal -- bash -c "cat $tk && time python3 tasks/$task.py < $tk; $stay;"
+            ;;
+        cpp)
+            gnome-terminal -- bash -c "cat $tk && time bin/$task < $tk; $stay;"
+            ;;
+    esac
+done

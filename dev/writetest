@@ -1,2 +1,2 @@
 #!/bin/bash
-gnome-terminal -- bash -c "touch tests/$1.txt; vim tests/$1.txt;"
+gnome-terminal -- bash -c "touch tests/$10.txt; vim -p tests/$1*.txt;"

@@ -77,10 +77,13 @@ map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./dev/r
 "debug with gdb
 map mj :silent !echo %<Bar>sed -r "s/.+\/(.+)\..+/\1/"<Bar>xargs ./dev/debug<CR><C-l>
 
-"write a test
+"create test files
+map kn :!./dev/createtest<Space>
+
+"write tests
 map nk :silent !echo %<Bar>sed -r "s/.+\/(.+)\..+/\1/"<Bar>xargs ./dev/writetest<CR><C-l>
 
-"run the written test
+"run the written tests
 map nl :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./dev/runtest<CR><C-l>
 
 "save task for upsolving. save <file name without extension> -m <message>
