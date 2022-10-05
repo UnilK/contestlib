@@ -22,7 +22,7 @@ stay="bash -c \"read var\""
 
 case $language in
     py)
-        gnome-terminal -- bash -c "time pypy3 tasks/$task.py; $stay;"
+        gnome-terminal -- bash -c "time python3 tasks/$task.py; $stay;"
         ;;
     cpp)
         gnome-terminal -- bash -c "time bin/$task; $stay;"
