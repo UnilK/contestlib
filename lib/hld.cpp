@@ -1,29 +1,23 @@
-template<
-typename T, typename L,
-template<typename, typename> typename O,
-template<typename, typename, template<typename, typename> typename> typename S>
 struct HLD{
     
     // adamant's awesome HLD implementation <3
     // https://codeforces.com/blog/entry/53170
     // nodes are 1-indexed
 
-    using X = O<T, L>;
-    int n, isedge;
-    vector<int> l, nxt, hop;
-    S<T, L, O> seg;
+    int n;
+    vector<int> l, r, nxt, hop;
 
-    HLD(vector<vector<int> > &g, vector<T> v={}, int isedge_=0):
-        n(g.size()-1), isedge(isedge_), l(g.size()), nxt(g.size()), hop(g.size()){
+    HLD(vector<vector<int> > &g) :
+        n(g.size()-1), l(g.size()), r(g.size()), nxt(g.size()), hop(g.size()){
 
         vector<int> sz(n+1, 0);
 
-        auto dfs0 = [&](auto &&dfs0, int i) -> int{
+        auto dfs0 = [&](auto &&rec, int i) -> int {
             int tot = 0;
             sz[i] = 1;
             for(int &j : g[i]){
                 if(!sz[j]){
-                    tot += dfs0(dfs0, j);
+                    tot += rec(rec, j);
                     if(sz[j] >= sz[g[i][0]]) swap(g[i][0], j);
                 }
             }
@@ -34,7 +28,7 @@ struct HLD{
         dfs0(dfs0, 1);
 
         int t = 0;
-        auto dfs1 = [&](auto &&dfs1, int i) -> void{
+        auto dfs1 = [&](auto &&rec, int i) -> void {
             l[i] = t++;
             for(int j : g[i]){
                 if(sz[j] < sz[i]){
@@ -45,18 +39,18 @@ struct HLD{
                         nxt[j] = j;
                         hop[j] = i;
                     }
-                    dfs1(dfs1, j);
+                    rec(rec, j);
                 }
             }
+            r[i] = t;
         };
 
         nxt[1] = hop[1] = 1;
         dfs1(dfs1, 1);
-
-        vector<T> ord(n+1);
-        for(int i=1; i<=n; i++) ord[l[i]] = v[i];
-        seg.init(n, ord);
     }
+
+    int &operator[](int i){ return l[i]; }
+    array<int, 2> sub(int i){ return {l[i], r[i]}; }
 
     int lca(int a, int b){
         while(nxt[a] != nxt[b]){
@@ -67,25 +61,28 @@ struct HLD{
         return b;
     }
 
-    void add(int a, int b, L val){
+    vector<array<int, 2> > path(int a, int b, int e=0){
+        vector<array<int, 2> > p;
         while(nxt[a] != nxt[b]){
             if(l[nxt[a]] < l[nxt[b]]) swap(a, b);
-            seg.add(l[nxt[a]], l[a], val);
+            p.pb({l[nxt[a]], l[a]});
             a = hop[a];
         }
         if(l[a] < l[b]) swap(a, b);
-        seg.add(max(l[b]+isedge, l[nxt[a]]), l[a], val);
+        if(max(l[b]+e, l[nxt[a]]) <= l[a]) p.pb({max(l[b]+e, l[nxt[a]]), l[a]});
+        return p;
     }
 
-    T sum(int a, int b){
-        T ret = X::qnil;
-        while(nxt[a] != nxt[b]){
-            if(l[nxt[a]] < l[nxt[b]]) swap(a, b);
-            ret = X::join(ret, seg.sum(l[nxt[a]], l[a]));
-            a = hop[a];
-        }
-        if(l[a] < l[b]) swap(a, b);
-        return X::join(ret, seg.sum(max(l[b]+isedge, l[nxt[a]]), l[a]));
+    template<typename Q, typename T>
+    void add(int a, int b, Q &seg, const T &val){
+        auto s = path(a, b);
+        for(auto [aa, bb] : s) seg.add(aa, bb, val);
+    }
+
+    template<typename Q, typename T>
+    T sum(int a, int b, Q &seg, T x){
+        auto s = path(a, b);
+        for(auto [aa, bb] : s) x += seg.sum(aa, bb);
+        return x;
     }
 };
-
