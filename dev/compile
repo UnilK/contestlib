@@ -2,6 +2,7 @@
 
 task="A"
 directory="tasks"
+#flags="-O2 -Wall -Wextra"
 flags="-O2 -Wall -Wextra -Wshadow -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -Wshift-overflow=2"
 
 while [[ $# -gt 0 ]]
