@@ -23,7 +23,7 @@ stay="bash -c \"read var\""
 cases=()
 while IFS=  read -r -d $'\0'; do
     cases+=("$REPLY")
-done < <(find ./tests -name "*${task}*" -print0)
+done < <(find ./tests -name "*${task}*.txt" -print0)
 
 for tk in "${cases[@]}"
 do

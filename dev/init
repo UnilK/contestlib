@@ -32,18 +32,24 @@ do
 done
 
 mkdir -p tests
+mkdir -p tasks
 mkdir -p old
 mkdir -p old/old0
 mkdir -p old/old1
 mkdir -p old/old2
 mkdir -p old/old3
 mkdir -p old/old4
-mv old/old3 old/old4
-mv old/old2 old/old3
-mv old/old1 old/old2
-mv old/old0 old/old1
-mv tasks old/old0
-mkdir -p tasks
+
+rm -rf old/old4/*
+cp -rf old/old3/* old/old4
+rm -rf old/old3/*
+cp -rf old/old2/* old/old3
+rm -rf old/old2/*
+cp -rf old/old1/* old/old2
+rm -rf old/old1/*
+cp -rf old/old0/* old/old1
+rm -rf old/old0/*
+cp -rf tasks tests old/old0
 
 rm -f tasks/*
 rm -f tests/*

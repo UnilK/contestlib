@@ -78,7 +78,7 @@ map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./dev/r
 map mj :silent !echo %<Bar>sed -r "s/.+\/(.+)\..+/\1/"<Bar>xargs ./dev/debug<CR><C-l>
 
 "create test files
-map kn :!./dev/createtest<Space>
+map kn :silent !./dev/createtest<Space>
 
 "write tests
 map nk :silent !echo %<Bar>sed -r "s/.+\/(.+)\..+/\1/"<Bar>xargs ./dev/writetest<CR><C-l>
