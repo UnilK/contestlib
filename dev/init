@@ -31,8 +31,20 @@ do
     esac
 done
 
-mkdir -p tasks
 mkdir -p tests
+mkdir -p old
+mkdir -p old/old0
+mkdir -p old/old1
+mkdir -p old/old2
+mkdir -p old/old3
+mkdir -p old/old4
+mv old/old3 old/old4
+mv old/old2 old/old3
+mv old/old1 old/old2
+mv old/old0 old/old1
+mv tasks old/old0
+mkdir -p tasks
+
 rm -f tasks/*
 rm -f tests/*
 

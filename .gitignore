@@ -2,3 +2,5 @@ tasks/*
 bin/*
 upsolve/*
 tests/*
+old/*
+.vscode/*
