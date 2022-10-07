@@ -1,2 +1,28 @@
 #!/bin/bash
-gnome-terminal -- bash -c "touch tests/$10.txt; vim -p tests/$1*.txt;"
+
+task="A"
+editor="vim"
+
+while [[ $# -gt 0 ]]
+do
+    option="$1"
+    case $option in
+        -g)
+            editor="gedit"
+            shift 1
+            ;;
+        *)
+            task="$1"
+            shift 1
+            ;;
+    esac
+done
+
+case $editor in
+    vim)
+        gnome-terminal -- bash -c "touch tests/${task}0.txt; vim -p tests/${task}*.txt;"
+        ;;
+    gedit)
+        gnome-terminal -- bash -c "touch tests/${task}0.txt; gedit tests/${task}*.txt;"
+        ;;
+esac

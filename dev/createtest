@@ -8,4 +8,3 @@ do
     touch tests/${task}${i}.txt
 done
 
-gnome-terminal -- bash -c "vim -p tests/$task*.txt;"

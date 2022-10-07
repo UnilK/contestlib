@@ -1,4 +1,23 @@
 #!/bin/bash
 
-vim -S dev/.vimrc -p tasks/*
+editor="vim"
 
+while [[ $# -gt 0 ]]
+do
+    option="$1"
+    case $option in
+        -g)
+            editor="gedit"
+            shift 1
+            ;;
+    esac
+done
+
+case $editor in
+    vim)
+        vim -S dev/.vimrc -p tasks/*.cpp
+        ;;
+    gedit)
+        gedit tasks/*.cpp
+        ;;
+esac
