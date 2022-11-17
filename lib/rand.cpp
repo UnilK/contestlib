@@ -1,6 +1,10 @@
 mt19937 rng32(chrono::steady_clock::now().time_since_epoch().count());
-int rnd(){ return rng32()>>1; }
+mt19937_64 rng64(chrono::steady_clock::now().time_since_epoch().count());
 
-// mt19937_64 rng64(chrono::steady_clock::now().time_since_epoch().count());
-// ll rnd(){ return rng64()>>1; }
+double rnd(){
+    return uniform_real_distribution<double>(0, 1)(rng32);
+}
+int rnd(int a, int b){
+    return uniform_int_distribution<int>(a, b)(rng32);
+}
 

@@ -15,9 +15,9 @@ done
 
 case $editor in
     vim)
-        vim -S dev/.vimrc -p tasks/*.cpp
+        vim -S dev/.vimrc -p tasks/*
         ;;
     gedit)
-        gedit tasks/*.cpp
+        gedit tasks/*
         ;;
 esac

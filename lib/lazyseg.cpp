@@ -72,6 +72,6 @@ template<typename T, typename L> struct lsegsum {
     static constexpr L lnil = 0;
     static T segjoin(T a, T b){ return a+b; }
     static void lazyjoin(L &a, L b){ a+=b; }
-    static T lazymerge(T a, L b, int d){ return a+b*d; }
+    static T lazymerge(T a, L b, [[maybe_unused]] int d){ return a+b*d; }
 };
 

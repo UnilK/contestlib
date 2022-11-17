@@ -68,6 +68,9 @@ set tabpagemax=32
 "compile
 map mk :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 \2/"<Bar>xargs ./dev/compile<CR><C-l>
 
+"heavy compile
+map mi :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 -i \2/"<Bar>xargs ./dev/compile<CR><C-l>
+
 "compile for debugging
 map mo :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 -o \2/"<Bar>xargs ./dev/compile<CR><C-l>
 
