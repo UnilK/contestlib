@@ -27,4 +27,7 @@ case $language in
     cpp)
         gnome-terminal -- bash -c "time bin/$task; $stay;"
         ;;
+    rs)
+        gnome-terminal -- bash -c "time bin/$task; $stay;"
+        ;;
 esac

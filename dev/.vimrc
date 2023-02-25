@@ -66,7 +66,7 @@ set cino=N-s,g0
 set tabpagemax=32
 
 "compile
-map mk :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 \2/"<Bar>xargs ./dev/compile<CR><C-l>
+map mk :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\.(.+)/-d \1 \2 -t \3/"<Bar>xargs ./dev/compile<CR><C-l>
 
 "heavy compile
 map mi :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 -i \2/"<Bar>xargs ./dev/compile<CR><C-l>
@@ -93,5 +93,9 @@ map nl :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./dev/r
 map ms :!./dev/save<Space>
 
 "append a file from lib to the cursor position
+
 map ld :r lib/
+au BufEnter,BufNew,VimEnter *.cpp map ld :r lib/cpp/
+au BufEnter,BufNew,VimEnter *.rs map ld :r lib/rs/
+au BufEnter,BufNew,VimEnter *.py map ld :r lib/py/
 

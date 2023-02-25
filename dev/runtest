@@ -34,5 +34,8 @@ do
         cpp)
             gnome-terminal -- bash -c "cat $tk && time bin/$task < $tk; $stay;"
             ;;
+        rs)
+            gnome-terminal -- bash -c "cat $tk && time bin/$task < $tk; $stay;"
+            ;;
     esac
 done

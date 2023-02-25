@@ -3,6 +3,7 @@
 range=6
 cpp=1
 python=0
+rust=0
 
 while [[ $# -gt 0 ]]
 do    
@@ -14,6 +15,15 @@ do
             ;;
         -pyy)
             python=1
+            cpp=0
+            shift 1
+            ;;
+        -rs)
+            rust=1
+            shift 1
+            ;;
+        -rss)
+            rust=1
             cpp=0
             shift 1
             ;;
@@ -60,7 +70,7 @@ if [ $cpp -eq 1 ];
 then
     for ((i=0; i<range; i++)) 
     do
-        cp lib/template.cpp tasks/${alphabet[i]}.cpp
+        cp lib/cpp/template.cpp tasks/${alphabet[i]}.cpp
     done
 fi
 
@@ -69,6 +79,14 @@ then
     for ((i=0; i<range; i++)) 
     do
         touch tasks/${alphabet[i]}.py
+    done
+fi
+
+if [ $rust -eq 1 ];
+then
+    for ((i=0; i<range; i++)) 
+    do
+        cp lib/rs/template.rs tasks/${alphabet[i]}.rs
     done
 fi
 

@@ -3,6 +3,7 @@
 task="A"
 directory="tasks"
 flags="-O2 -Wall -Wextra"
+language="cpp"
 
 while [[ $# -gt 0 ]]
 do
@@ -15,6 +16,10 @@ do
         -o)
             flags="-Wall -g"
             shift 1
+            ;;
+        -t)
+            language="$2"
+            shift 2
             ;;
         -i)
             flags="-O2 -Wall -Wextra -Wshadow -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -Wshift-overflow=2"
@@ -29,4 +34,15 @@ done
 
 mkdir -p bin
 stay="echo done; bash -c \"read var\""
-gnome-terminal -- bash -c "g++ -std=c++17 $flags $directory/$task.cpp -o bin/$task; $stay;"
+
+case $language in
+    py)
+        gnome-terminal -- bash -c "time python3 tasks/$task.py; $stay;"
+        ;;
+    cpp)
+        gnome-terminal -- bash -c "g++ -std=c++17 $flags $directory/$task.cpp -o bin/$task; $stay;"
+        ;;
+    rs)
+        gnome-terminal -- bash -c "rustc $directory/$task.rs -o bin/$task; $stay;"
+        ;;
+esac
