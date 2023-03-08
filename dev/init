@@ -49,6 +49,8 @@ mkdir -p old/old1
 mkdir -p old/old2
 mkdir -p old/old3
 mkdir -p old/old4
+mkdir -p rust/src
+touch rust/src/main.rs
 
 rm -rf old/old4/*
 cp -rf old/old3/* old/old4

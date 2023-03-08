@@ -4,3 +4,6 @@ upsolve/*
 tests/*
 old/*
 .vscode/*
+rust/src/*
+rust/target/*
+rust/Cargo.lock

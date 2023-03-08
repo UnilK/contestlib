@@ -43,6 +43,8 @@ case $language in
         gnome-terminal -- bash -c "g++ -std=c++17 $flags $directory/$task.cpp -o bin/$task; $stay;"
         ;;
     rs)
-        gnome-terminal -- bash -c "rustc $directory/$task.rs -o bin/$task; $stay;"
+        cp tasks/${task}.rs rust/src/main.rs
+        gnome-terminal -- bash -c "(cd rust && cargo build); $stay; cp rust/target/debug/contest bin/$task"
+        
         ;;
 esac
