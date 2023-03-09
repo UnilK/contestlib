@@ -75,7 +75,7 @@ map mi :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f v/"<Bar>x
 map mo :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f d/"<Bar>xargs dev/compile<CR><C-l>
 
 "compile for speed
-map mo :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f o/"<Bar>xargs dev/compile<CR><C-l>
+map mu :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f o/"<Bar>xargs dev/compile<CR><C-l>
 
 "run
 map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2/"<Bar>xargs dev/run<CR><C-l>
