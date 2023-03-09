@@ -7,8 +7,12 @@ while [[ $# -gt 0 ]]
 do
     option="$1"
     case $option in
-        -f)
+        -l)
             language="$2"
+            shift 2
+            ;;
+        -t)
+            task="$2"
             shift 2
             ;;
         *)
@@ -21,13 +25,13 @@ done
 stay="bash -c \"read var\""
 
 case $language in
-    py)
-        gnome-terminal -- bash -c "time python3 tasks/$task.py; $stay;"
-        ;;
     cpp)
         gnome-terminal -- bash -c "time bin/$task; $stay;"
         ;;
-    rs)
+    rust)
         gnome-terminal -- bash -c "time bin/$task; $stay;"
+        ;;
+    python)
+        gnome-terminal -- bash -c "time pypy3 tasks/python/$task.py; $stay;"
         ;;
 esac

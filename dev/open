@@ -1,6 +1,7 @@
 #!/bin/bash
 
 editor="vim"
+initlang="cpp"
 
 while [[ $# -gt 0 ]]
 do
@@ -10,14 +11,22 @@ do
             editor="gedit"
             shift 1
             ;;
+        -rs)
+            initlang="rust"
+            shift 1
+            ;;
+        -py)
+            initlang="python"
+            shift 1
+            ;;
     esac
 done
 
 case $editor in
     vim)
-        vim -S dev/.vimrc -p tasks/*
+        vim -S dev/.vimrc -p tasks/${initlang}/*
         ;;
     gedit)
-        gedit tasks/*
+        gedit tasks/${initlang}/*
         ;;
 esac

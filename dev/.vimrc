@@ -66,31 +66,34 @@ set cino=N-s,g0
 set tabpagemax=32
 
 "compile
-map mk :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\.(.+)/-d \1 \2 -t \3/"<Bar>xargs ./dev/compile<CR><C-l>
+map mk :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f n/"<Bar>xargs dev/compile<CR><C-l>
 
 "heavy compile
-map mi :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 -i \2/"<Bar>xargs ./dev/compile<CR><C-l>
+map mi :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f v/"<Bar>xargs dev/compile<CR><C-l>
 
 "compile for debugging
-map mo :silent !echo %<Bar>sed -r "s/(.+)\/(.+)\..+/-d \1 -o \2/"<Bar>xargs ./dev/compile<CR><C-l>
+map mo :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f d/"<Bar>xargs dev/compile<CR><C-l>
+
+"compile for speed
+map mo :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2 -f o/"<Bar>xargs dev/compile<CR><C-l>
 
 "run
-map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./dev/run<CR><C-l>
+map ml :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2/"<Bar>xargs dev/run<CR><C-l>
 
 "debug with gdb
-map mj :silent !echo %<Bar>sed -r "s/.+\/(.+)\..+/\1/"<Bar>xargs ./dev/debug<CR><C-l>
+map mj :silent !echo %<Bar>sed -r "s/.+\/.+\/(.+)\..+/\1/"<Bar>xargs dev/debug<CR><C-l>
 
 "create test files
-map kn :silent !./dev/createtest<Space>
+map kn :silent !dev/createtest<Space>
 
 "write tests
-map nk :silent !echo %<Bar>sed -r "s/.+\/(.+)\..+/\1/"<Bar>xargs ./dev/writetest<CR><C-l>
+map nk :silent !echo %<Bar>sed -r "s/.+\/.+\/(.+)\..+/\1/"<Bar>xargs dev/writetest<CR><C-l>
 
 "run the written tests
-map nl :silent !echo %<Bar>sed -r "s/.+\/(.+)\.(.+)/\1 -f \2/"<Bar>xargs ./dev/runtest<CR><C-l>
+map nl :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2/"<Bar>xargs dev/runtest<CR><C-l>
 
 "save task for upsolving. save <file name without extension> -m <message>
-map ms :!./dev/save<Space>
+map sa :silent !echo %<Bar>sed -r "s/.+\/(.+)\/(.+)\..+/-l \1 -t \2/"<Bar>xargs dev/save<CR><C-l>
 
 "append a file from lib to the cursor position
 
@@ -98,4 +101,13 @@ map ld :r lib/
 au BufEnter,BufNew,VimEnter *.cpp map ld :r lib/cpp/
 au BufEnter,BufNew,VimEnter *.rs map ld :r lib/rs/
 au BufEnter,BufNew,VimEnter *.py map ld :r lib/py/
+
+" switch between languages
+
+au BufEnter,BufNew,VimEnter *.cpp map ll :e tasks/rust/%:t:r.rs<CR>
+au BufEnter,BufNew,VimEnter *.rs map ll :e tasks/python/%:t:r.py<CR>
+au BufEnter,BufNew,VimEnter *.py map ll :e tasks/cpp/%:t:r.cpp<CR>
+
+"close tabs by holding down q
+nmap qqq :qa<CR>
 

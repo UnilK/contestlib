@@ -1,7 +1,7 @@
 #!/bin/bash
 
 task="A"
-directory="tasks"
+flagtype="n"
 flags="-O2 -Wall -Wextra"
 language="cpp"
 
@@ -9,21 +9,17 @@ while [[ $# -gt 0 ]]
 do
     option="$1"
     case $option in
-        -d)
-            directory="$2"
+        -f)
+            flagtype="$2"
             shift 2
             ;;
-        -o)
-            flags="-Wall -g"
-            shift 1
-            ;;
-        -t)
+        -l)
             language="$2"
             shift 2
             ;;
-        -i)
-            flags="-O2 -Wall -Wextra -Wshadow -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -Wshift-overflow=2"
-            shift 1
+        -t)
+            task="$2"
+            shift 2
             ;;
         *)
             task="$1"
@@ -32,19 +28,36 @@ do
     esac
 done
 
+case $flagtype in
+    o)
+        flags="-O3 -mavx2 -Wall -Wextra"
+        ;;
+    v)
+        flags="-O2 -Wall -Wextra -Wshadow -fsanitize=address -fsanitize=undefined -fno-sanitize-recover -Wshift-overflow=2"
+        ;;
+    d)
+        flags="-Wall -Og -g"
+        ;;
+    n)
+        flags="-O2 -Wall -Wextra"
+        ;;
+    *)
+        flags="-O2 -Wall -Wextra"
+        ;;
+esac
+
 mkdir -p bin
 stay="echo done; bash -c \"read var\""
 
 case $language in
-    py)
-        gnome-terminal -- bash -c "time python3 tasks/$task.py; $stay;"
-        ;;
     cpp)
-        gnome-terminal -- bash -c "g++ -std=c++17 $flags $directory/$task.cpp -o bin/$task; $stay;"
+        gnome-terminal -- bash -c "g++ -std=c++17 $flags tasks/cpp/$task.cpp -o bin/$task; $stay;"
         ;;
-    rs)
-        cp tasks/${task}.rs rust/src/main.rs
+    rust)
+        cp tasks/rust/${task}.rs rust/src/main.rs
         gnome-terminal -- bash -c "(cd rust && cargo build); $stay; cp rust/target/debug/contest bin/$task"
-        
+        ;;
+    python)
+        gnome-terminal -- bash -c "time python3 tasks/python/$task.py; $stay;"
         ;;
 esac
