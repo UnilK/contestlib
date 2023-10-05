@@ -32,6 +32,6 @@ case $language in
         gnome-terminal -- bash -c "time bin/$task; $stay;"
         ;;
     python)
-        gnome-terminal -- bash -c "time pypy3 tasks/python/$task.py; $stay;"
+        gnome-terminal -- bash -c "time python3 tasks/python/$task.py; $stay;"
         ;;
 esac

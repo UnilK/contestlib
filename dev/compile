@@ -51,7 +51,7 @@ stay="echo done; bash -c \"read var\""
 
 case $language in
     cpp)
-        gnome-terminal -- bash -c "g++ -std=c++17 $flags tasks/cpp/$task.cpp -o bin/$task; $stay;"
+        gnome-terminal -- bash -c "g++ -std=c++20 $flags tasks/cpp/$task.cpp -o bin/$task; $stay;"
         ;;
     rust)
         cp tasks/rust/${task}.rs rust/src/main.rs

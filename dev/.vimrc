@@ -39,6 +39,10 @@ nnoremap <C-S-M-a> <Left>
 nnoremap <C-S-M-s> <Down>
 nnoremap <C-S-M-d> <Right>
 
+"ALT + j binding to ESC
+execute "set <C-S-M-j>=\ej"
+inoremap <C-S-M-j> <esc>
+
 "colors :)
 syntax on
 
