@@ -103,6 +103,9 @@ array<int, 4> four_squares(int n){
         }
 
         Quat suba = gcd({(double)x, 0, 0, 0}, {1, a, b, 0});
+        
+        if(x == 2) suba = {1, 1, 0, 0};
+
         while(nn%x == 0){
             ans = suba*ans;
             nn /= x;
