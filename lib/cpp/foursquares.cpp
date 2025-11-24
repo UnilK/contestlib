@@ -92,9 +92,9 @@ array<int, 4> four_squares(int n){
     for(int x : p){
         
         double a = 0, b = 0;
-        vector<int> sum(x, -1);
+        unordered_map<int, int> sum;
         for(long long i=0; i<x; i++){
-            if(sum[i*i%x] != -1){
+            if(sum.count(i*i%x)){
                 a = sum[i*i%x];
                 b = i;
                 break;
