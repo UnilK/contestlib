@@ -103,7 +103,7 @@ array<int, 4> four_squares(int n){
         }
 
         Quat suba = gcd({(double)x, 0, 0, 0}, {1, a, b, 0});
-        
+
         if(x == 2) suba = {1, 1, 0, 0};
 
         while(nn%x == 0){
@@ -111,14 +111,14 @@ array<int, 4> four_squares(int n){
             nn /= x;
         }
     }
-    
+   
     if(norm(ans) != n){
         return {0, 0, 0, 0};
     }
 
 
-    if((int)(2*ans[0])%2 == 1){
-        
+    if(ans[0] != floor(ans[0])){
+
         vector<Quat> units;
         
         for(int i=0; i<4; i++){
@@ -138,7 +138,7 @@ array<int, 4> four_squares(int n){
         }
 
         for(Quat u : units){
-            if((int)(2*(u*ans)[0])%2 == 0){
+            if((u*ans)[0] == floor((u*ans)[0])){
                 ans = u*ans;
                 break;
             }
@@ -150,3 +150,4 @@ array<int, 4> four_squares(int n){
 
     return {(int)ans[0], (int)ans[1], (int)ans[2], (int)ans[3]};
 }
+
